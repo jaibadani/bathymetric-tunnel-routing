@@ -1,0 +1,38 @@
+{
+  "dataset": "GEBCO_2026 Grid (Sub-Ice Topography & Bathymetry) & TID Grid",
+  "version": "2.0-final",
+  "source_url": "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/",
+  "citation": "GEBCO Bathymetric Compilation Group 2026. The GEBCO_2026 Grid - a continuous terrain model of the global oceans and land. NERC EDS British Oceanographic Data Centre NOC. doi:10.5285/gebco_2026",
+  "crs_projected": "EPSG:32618",
+  "crs_geographic": "EPSG:4326",
+  "grid_shape": [
+    111,
+    111
+  ],
+  "dx_m": 450.0,
+  "dy_m": 450.0,
+  "utm_bounds": [
+    694258.7,
+    4359499.4,
+    743758.7,
+    4408999.4
+  ],
+  "geographic_bounds": [
+    -72.7452,
+    -72.153,
+    39.3631,
+    39.7961
+  ],
+  "resampling_method": "bilinear",
+  "nodata_value": -32767.0,
+  "water_cells": 12321,
+  "land_cells": 0,
+  "depth_range_m": [
+    53.0,
+    1312.6162109375
+  ],
+  "elevation_range_m": [
+    -1312.6162109375,
+    -53.0
+  ]
+}

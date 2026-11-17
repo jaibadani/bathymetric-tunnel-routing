@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Underwater Tunnel Route Optimization - Presentation</title>
+<style>
+  :root {
+    --bg-color: #0b111e;
+    --card-bg: #151e32;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent-blue: #38bdf8;
+    --accent-green: #4ade80;
+    --accent-coral: #fb7185;
+    --border-color: #334155;
+  }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background-color: #080d17;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+  }
+  header h1 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--accent-blue);
+    font-weight: 600;
+  }
+  .controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  button {
+    background-color: #1e293b;
+    color: #fff;
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  button:hover {
+    background-color: #334155;
+    border-color: var(--accent-blue);
+  }
+  .slide-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+  }
+  .slide {
+    display: none;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 1050px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  .slide.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .slide-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #fff;
+  }
+  .slide-number {
+    color: var(--accent-blue);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .content {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .content p, .content ul {
+    margin-bottom: 16px;
+  }
+  .content strong {
+    color: #fff;
+  }
+  .highlight {
+    color: var(--accent-blue);
+    font-weight: 600;
+  }
+  .success {
+    color: var(--accent-green);
+    font-weight: 600;
+  }
+  .danger {
+    color: var(--accent-coral);
+    font-weight: 600;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.95rem;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  th {
+    background-color: #0f172a;
+    color: var(--accent-blue);
+  }
+  tr:hover {
+    background-color: #1e293b;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .card {
+    background-color: #0f172a;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+  }
+  .card h3 {
+    margin-top: 0;
+    color: var(--accent-blue);
+  }
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Underwater Tunnel Route Optimization | Final Defense</h1>
+  <div class="controls">
+    <button onclick="prevSlide()">❮ Prev</button>
+    <span id="slideIndicator" style="font-weight: bold; min-width: 60px; text-align: center;">1 / 12</span>
+    <button onclick="nextSlide()">Next ❯</button>
+  </div>
+</header>
+
+<div class="slide-container">
+
+  <!-- Slide 1 -->
+  <div class="slide active">
+    <div class="slide-header">
+      <h2>Underwater Tunnel Route Optimization</h2>
+      <span class="slide-number">Slide 1 / 12 (0:20)</span>
+    </div>
+    <div class="content" style="text-align: center; padding: 40px 0;">
+      <h3 style="font-size: 2rem; color: #fff; margin-bottom: 12px;">Balancing Feasibility, Length, Terrain Risk, and Curvature</h3>
+      <p style="font-size: 1.2rem; color: var(--accent-blue); margin-bottom: 30px;">A Benchmark Study in the Hudson Canyon Continental Margin (GEBCO_2026)</p>
+      <div style="display: inline-block; text-align: left; background: #0f172a; padding: 24px 40px; border-radius: 8px; border: 1px solid var(--border-color);">
+        <p><strong>Research Question:</strong> How do seafloor terrain characteristics and mathematical derivation choices change route feasibility, length, terrain risk, and robustness?</p>
+        <p><strong>Core Thesis:</strong> <span class="highlight">The shortest feasible tunnel is not always the best tunnel.</span></p>
+        <p><strong>Formulations:</strong> Discrete Graph (Dijkstra) vs. Continuous Cubic Spline (SciPy SLSQP).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Problem Definition & Motivation</h2>
+      <span class="slide-number">Slide 2 / 12 (1:00)</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>The Engineering Problem</h3>
+          <ul>
+            <li>Underwater infrastructure (rail & utility tunnels) must navigate extreme bathymetric relief, continental slopes, and submarine canyons.</li>
+            <li>Tunnel boring machines (TBM) and high-speed rail impose strict <strong>maximum curvature limits</strong> ($\kappa \le \kappa_{\max}$, min radius $\ge 2000\text{ m}$).</li>
+            <li>Direct straight lines encounter treacherous canyons and unfeasible slope gradients.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>What This Project Is & Is Not</h3>
+          <ul>
+            <li><strong>IS:</strong> A mathematical optimization benchmark comparing discrete graph optimality against continuous non-linear programming.</li>
+            <li><strong>IS:</strong> A controlled sensitivity analysis of feature-derivation choices.</li>
+            <li><strong>IS NOT:</strong> A structural or geotechnical borehole study. Depth, slope, roughness, and curvature are <em>mathematical proxies</em> for seafloor suitability.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Dataset, Projected Coordinates, & Physical Units</h2>
+      <span class="slide-number">Slide 3 / 12 (1:00)</span>
+    </div>
+    <div class="content">
+      <ul>
+        <li><strong>Dataset Source:</strong> GEBCO_2026 global bathymetric compilation (15 arc-seconds) & Type Identifier (TID) Grid from British Oceanographic Data Centre (BODC).</li>
+        <li><strong>Crossing Region:</strong> Hudson Canyon Continental Margin (49.5 km × 49.5 km, 111 × 111 cells). 100% water coverage (no land masking boundary artifacts).</li>
+        <li><strong>Projected Metric CRS:</strong> Reprojected to <strong>UTM Zone 18N (EPSG:32618)</strong> on a regular metric grid with $\Delta x = \Delta y = 450.0\text{ m}$.</li>
+        <li><strong>Geodesic Distance Validation:</strong>
+          <ul>
+            <li>Projected Grid Distance $A \to B$: <strong>42,452.92 m</strong></li>
+            <li>WGS84 True Geodesic Distance: <strong>42,444.46 m</strong></li>
+            <li>Discrepancy: <span class="success">+8.46 m (0.0199% error)</span> — validated by <code>pyproj.Geod</code>.</li>
+          </ul>
+        </li>
+        <li><strong>Depth Definition:</strong> Seafloor water depth $d(x, y) = -z(x, y)$ is a clearance feasibility proxy, not the tunnel subterranean alignment depth.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Data Analysis 1: Spatial Maps & Feature Distributions</h2>
+      <span class="slide-number">Slide 4 / 12 (1:30) [Visual Slide 1]</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div>
+          <img src="../figures/fig02_feature_spatial_maps.png" alt="Feature Spatial Maps">
+        </div>
+        <div>
+          <div class="card">
+            <h3>Feature Distributions & Skewness</h3>
+            <ul>
+              <li><strong>Depth ($d$):</strong> Mean 144.2 m, Range [53.0, 1312.6] m. Heavy right skew (3.90). Shelf plateau at 70–100 m drops into a 1300 m canyon gorge.</li>
+              <li><strong>Slope ($s = |\nabla z|$):</strong> Central differences in metres. Flat shelf ($s < 0.005$, < 0.3°); canyon walls exceed 20.5° ($s = 0.373$). Skewness = 3.12.</li>
+              <li><strong>Roughness ($r$):</strong> Moving window std of slope ($w=3$). Sharp spikes at shelf break.</li>
+              <li><strong>Curvature ($c$):</strong> 5-point Laplacian stencil. Highlights inflection lines.</li>
+              <li><strong>Risk Field:</strong> $R(x, y) = 0.5 \tilde{s}^2 + 0.3 \tilde{r} + 0.2 \tilde{c}$. Quadratic slope penalty heavily punishes canyon incisions.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Data Analysis 2: Correlations, Moran's I, & PCA</h2>
+      <span class="slide-number">Slide 5 / 12 (1:30) [Visual Slide 2]</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div>
+          <img src="../figures/fig03_distributions_and_correlations.png" alt="Distributions and Correlations">
+        </div>
+        <div>
+          <div class="card">
+            <h3>Key Statistical Insights</h3>
+            <ul>
+              <li><strong>Collinearity:</strong> Slope and Roughness share strong positive correlation (Pearson $r = +0.941$, Spearman $\rho = +0.923$), confirming mathematical redundancy.</li>
+              <li><strong>Spatial Autocorrelation:</strong> Moran's $I$ is <strong>0.974</strong> for depth, <strong>0.940</strong> for slope, and <strong>0.959</strong> for risk. Massive spatial clustering ($p \ll 0.001$). Correlation reflects spatial co-occurrence, not causation.</li>
+              <li><strong>Thinned Check:</strong> Subsampling every 4th cell preserves correlation structure ($r_{s,r} = +0.932$).</li>
+              <li><strong>PCA Analysis:</strong> First Principal Component (PC1) accounts for <span class="highlight">84.3% of total variance</span>, cleanly segmenting the high-risk canyon zone.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Easy Formulation: Discrete Shortest Feasible Route</h2>
+      <span class="slide-number">Slide 6 / 12 (1:00)</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Formulation & Graph Model</h3>
+          <p>$$\min_{P} L(P) = \sum_{e \in P} \|e\|$$</p>
+          <p><strong>Feasibility Constraints:</strong></p>
+          <ul>
+            <li>$s(v) \le s_{\max} = 0.08\text{ m/m}$ (~4.57°, P90)</li>
+            <li>$50\text{ m} \le d(v) \le 400\text{ m}$</li>
+          </ul>
+          <p><strong>Graph Structure:</strong> 8-neighbor grid graph on 12,321 cells. Metric Euclidean edge weights (450 m and 636.4 m).</p>
+          <p><strong>Solver:</strong> Dijkstra algorithm (nonnegative weights).</p>
+        </div>
+        <div class="card">
+          <h3>Results & Fatal Limitation</h3>
+          <ul>
+            <li><strong>Route Length:</strong> $L_E = 47,955.84\text{ m}$ (47.96 km)</li>
+            <li><strong>Cumulative Risk:</strong> $S_E = 493.12$ (high risk!)</li>
+            <li><strong>Runtime:</strong> 23.24 ms (9,439 nodes expanded)</li>
+            <li><strong>Optimality:</strong> <span class="highlight">Global discrete optimum</span> on this specific graph.</li>
+            <li><span class="danger">Fatal Flaw:</span> Discrete turns reach $45.0^\circ$. Smoothed curvature reaches $\kappa = 0.004260\text{ m}^{-1}$ (radius 235 m), violently violating continuous alignment constraints!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Hard Formulation: Continuous Smooth Spline Alignment</h2>
+      <span class="slide-number">Slide 7 / 12 (1:30)</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Spline Parameterization & Objective</h3>
+          <p>$$\min_{\mathbf{p}} J = \alpha L(p) + \beta S(p)$$</p>
+          <p>$$L(p) = \int_0^1 \|p'(t)\| dt, \quad S(p) = \int_0^1 R(p(t)) \|p'(t)\| dt$$</p>
+          <ul>
+            <li><strong>Parameterization:</strong> $C^2$ natural cubic spline $p(t) = (x(t), y(t))$ with $K=7$ interior control points (14 variables).</li>
+            <li><strong>Fields:</strong> Bicubic <code>RectBivariateSpline</code> on $d, s, R$.</li>
+            <li><strong>Weights:</strong> $\alpha = 1.0, \beta = 50,000$.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Constraints & Multi-Start SLSQP</h3>
+          <p><strong>Continuous Constraints ($M=200$ samples):</strong></p>
+          <ul>
+            <li>$50\text{ m} \le d(p(t)) \le 400\text{ m}$</li>
+            <li>$s(p(t)) \le 0.08\text{ m/m}$</li>
+            <li>$|\kappa_{\text{route}}(t)| = \frac{|x'y'' - y'x''|}{(x'^2 + y'^2)^{3/2}} \le 0.0005\text{ m}^{-1}$ ($R_{\min} \ge 2000\text{ m}$)</li>
+          </ul>
+          <p><strong>Multi-Start Protocol:</strong> Warm start from Dijkstra, straight line, and 8 randomized perturbations.</p>
+          <p><strong>Optimality:</strong> <span class="highlight">Local continuous optimum</span> on non-convex manifold.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Both Routes on the Terrain Risk Map</h2>
+      <span class="slide-number">Slide 8 / 12 (1:30)</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div>
+          <img src="../figures/fig05_easy_vs_hard_on_risk_map.png" alt="Easy vs Hard Routes Overlay">
+        </div>
+        <div>
+          <div class="card">
+            <h3>Visual & Geometric Comparison</h3>
+            <ul>
+              <li><strong>Straight Line (White Dotted):</strong> Crosses the canyon head directly; violates depth (389 m) and slope (10.7°) limits.</li>
+              <li><strong>Easy Route (Cyan Dashed):</strong> Hugs the canyon edge with severe 45° zig-zags. Accumulates high terrain risk ($S_E = 493.12$).</li>
+              <li><strong>Hard Route (Neon Green):</strong> Curves gracefully northward onto the flat continental shelf, avoiding the steep canyon gorge, before crossing gently to Point B.</li>
+              <li><strong>Smoothness:</strong> The hard spline maintains continuous curvature ($\kappa_{\max} = 0.000487\text{ m}^{-1}$, $R_{\min} = 2,053\text{ m}$).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Comparison Table & The Price of Realism</h2>
+      <span class="slide-number">Slide 9 / 12 (1:30)</span>
+    </div>
+    <div class="content">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Unit</th>
+            <th>Easy (Dijkstra)</th>
+            <th>Hard (SLSQP Spline)</th>
+            <th>Impact / Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Route Length $L$</strong></td>
+            <td>m</td>
+            <td>47,955.84</td>
+            <td>60,017.94</td>
+            <td><span class="danger">+12,062.10 m (+25.15%)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Terrain Risk $S$</strong></td>
+            <td>index</td>
+            <td>493.1159</td>
+            <td>119.2297</td>
+            <td><span class="success">-373.8862 (-75.82%)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Objective $J$</strong></td>
+            <td>weighted</td>
+            <td>24,703,748.82</td>
+            <td>6,021,503.03</td>
+            <td><span class="success">-75.6% reduction in penalty</span></td>
+          </tr>
+          <tr>
+            <td><strong>Max Route Curvature $\kappa$</strong></td>
+            <td>$\text{m}^{-1}$ (Limit: 0.0005)</td>
+            <td>0.004260</td>
+            <td>0.000487</td>
+            <td><span class="danger">Easy Violates (x8.5)</span> | <span class="success">Hard Feasible</span></td>
+          </tr>
+          <tr>
+            <td><strong>Max Slope $s$</strong></td>
+            <td>$\text{m/m}$ (Limit: 0.08)</td>
+            <td>0.0739</td>
+            <td>0.0049</td>
+            <td>Hard is 15x flatter (0.28° vs 4.23°)</td>
+          </tr>
+          <tr>
+            <td><strong>Runtime</strong></td>
+            <td>ms</td>
+            <td>23.24 ms</td>
+            <td>1,701.79 ms</td>
+            <td>Fast graph search vs. NLP</td>
+          </tr>
+          <tr>
+            <td><strong>Optimality Scope</strong></td>
+            <td>theory</td>
+            <td>Global Discrete</td>
+            <td>Local Continuous</td>
+            <td>Graph vs. Spline Manifold</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Price of Realism = +25.15%:</strong> Tunnel length increases by 12.06 km to satisfy continuous curvature constraints and achieve a <strong>75.82% risk reduction</strong>.</p>
+    </div>
+  </div>
+
+  <!-- Slide 10 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>S-Core Sensitivity Analysis</h2>
+      <span class="slide-number">Slide 10 / 12 (1:30)</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div>
+          <img src="../figures/fig08_score_sensitivity_overlays_and_robustness.png" alt="S-core Sensitivity Overlays">
+        </div>
+        <div>
+          <div class="card">
+            <h3>Robustness Findings</h3>
+            <ul>
+              <li><strong>Horn Slope Derivation:</strong> 3×3 weighting smooths local gradients. Route shifts marginally ($\Delta L = -0.32\%$, Hausdorff $d_H = 184\text{ m}$).</li>
+              <li><strong>Roughness Window ($w=7$):</strong> Broadens hazard footprint, nudging the hard route slightly farther north ($\Delta L = +1.18\%$).</li>
+              <li><strong>Pre-smoothing ($\sigma=2$):</strong> Removes high-frequency bathymetric noise, reducing cumulative risk by 14.6%.</li>
+              <li><strong>Slope Limit $s_{\max} = \text{P75}$ (0.0055):</strong> Restricts allowable corridor; easy route forced into severe detour ($\Delta L = +18.4\%$).</li>
+              <li><strong>Curvature Limit ($\kappa_{\max} = 0.000333$):</strong> Enforces $R_{\min}=3000\text{ m}$, expanding route length by $+4.12\%$.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 11 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Verification Suite (Section 11) & Optimality</h2>
+      <span class="slide-number">Slide 11 / 12 (1:00)</span>
+    </div>
+    <div class="content">
+      <div class="grid-2">
+        <div class="card">
+          <h3>Verification Audit: 10 / 10 Passed</h3>
+          <ul>
+            <li><strong>✓ Check 1 (Endpoints):</strong> Routes match $A$ and $B$ exactly (err < $10^{-4}\text{ m}$).</li>
+            <li><strong>✓ Check 2 (Independent Recompute):</strong> $L, S, J$ match solver output.</li>
+            <li><strong>✓ Check 3 (Toy 1):</strong> Dijkstra matches hand calculation ($113.14\text{ m}$).</li>
+            <li><strong>✓ Check 4 (Toy 2):</strong> SLSQP matches straight line on flat terrain ($1414.21\text{ m}$, $\kappa=0$).</li>
+            <li><strong>✓ Check 5 (Toy 3):</strong> Symmetric bump produces symmetric detour ($|y(t)| = |y(1-t)|$).</li>
+            <li><strong>✓ Check 6 (NetworkX):</strong> 0.00 m difference on identical graph.</li>
+            <li><strong>✓ Check 7 (Density Study):</strong> 200, 1000, 5000 sample points show zero constraint violation growth.</li>
+            <li><strong>✓ Check 8 (Interpolator):</strong> Overshoot strictly bounded (<0.26%).</li>
+            <li><strong>✓ Check 9 (Multi-Start):</strong> 10 starts evaluated; spread recorded.</li>
+            <li><strong>✓ Check 10 (Geodesic):</strong> Validated against WGS84 geodesic (<0.02%).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <img src="../figures/fig10_verification_toy_tests.png" alt="Toy Tests">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 12 -->
+  <div class="slide">
+    <div class="slide-header">
+      <h2>Conclusion & Research Implications</h2>
+      <span class="slide-number">Slide 12 / 12 (0:30)</span>
+    </div>
+    <div class="content">
+      <div class="card" style="margin-bottom: 20px;">
+        <h3>Core Conclusions</h3>
+        <ol>
+          <li><strong>The Shortest Path is Unbuildable:</strong> Discrete grid graph shortest paths contain non-physical 45° turns and hug steep canyon hazard zones.</li>
+          <li><strong>Price of Realism (+25.15%):</strong> Smooth curvature and terrain risk penalization require an additional 12.06 km of tunnel alignment, in exchange for a <strong>75.82% reduction in terrain risk</strong> and complete compliance with mechanical curvature limits.</li>
+          <li><strong>Hybrid Paradigm:</strong> Using discrete graph search (Dijkstra) to warm-start continuous non-linear programming (SLSQP) resolves non-convex local trap issues.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Limitations & Scope</h3>
+        <p>This is a 2D bathymetric routing model. Depth and slope are mathematical proxies for seafloor suitability, not subterranean geotechnical borehole stability measurements.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const indicator = document.getElementById('slideIndicator');
+
+  function showSlide(index) {
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+    indicator.textContent = (index + 1) + ' / ' + slides.length;
+  }
+
+  function nextSlide() {
+    if (currentSlide < slides.length - 1) {
+      currentSlide++;
+      showSlide(currentSlide);
+    }
+  }
+
+  function prevSlide() {
+    if (currentSlide > 0) {
+      currentSlide--;
+      showSlide(currentSlide);
+    }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+</script>
+
+</body>
+</html>

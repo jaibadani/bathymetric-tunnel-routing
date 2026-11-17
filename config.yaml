@@ -1,0 +1,82 @@
+# Underwater Tunnel Route Optimization - Configuration
+metadata:
+  project: "Underwater Tunnel Route Optimization"
+  version: "2.0-final"
+  dataset: "GEBCO_2026 Grid (Sub-Ice Topography & Bathymetry) & TID Grid"
+  source_institution: "NERC EDS British Oceanographic Data Centre (BODC) / GEBCO"
+  source_url: "https://dap.ceda.ac.uk/bodc/gebco/global/gebco_2026/"
+  citation: "GEBCO Bathymetric Compilation Group 2026. The GEBCO_2026 Grid - a continuous terrain model of the global oceans and land. NERC EDS British Oceanographic Data Centre NOC. doi:10.5285/gebco_2026"
+  region_name: "Hudson Canyon Continental Shelf & Slope Crossing"
+  crs_projected: "EPSG:32618" # UTM Zone 18N
+  crs_geographic: "EPSG:4326" # WGS84
+
+grid:
+  nx: 111
+  ny: 111
+  dx: 450.0 # metres
+  dy: 450.0 # metres
+  x_center: 719008.7
+  y_center: 4384249.4
+  xmin: 694258.7
+  xmax: 743758.7
+  ymin: 4359499.4
+  ymax: 4408999.4
+  lon_bounds: [-72.7452, -72.1530]
+  lat_bounds: [39.3631, 39.7961]
+  nodata_value: -32767.0
+  resampling_method: "bilinear"
+
+endpoints:
+  point_A:
+    grid_row: 80
+    grid_col: 15
+    utm_x: 701008.7
+    utm_y: 4372999.4
+    lon: -72.66281
+    lat: 39.48313
+    description: "Southwest Continental Shelf (depth ~82 m, flat)"
+  point_B:
+    grid_row: 30
+    grid_col: 95
+    utm_x: 737008.7
+    utm_y: 4395499.4
+    lon: -72.23661
+    lat: 39.67646
+    description: "Northeast Outer Shelf Terrace (depth ~119 m, flat)"
+
+features:
+  slope_method: "central_difference" # baseline; alternatives: horn, sobel
+  roughness_method: "std_slope" # baseline; alternatives: std_depth
+  roughness_window: 3 # baseline; alternatives: 5, 7, 9
+  curvature_method: "laplacian" # baseline; alternatives: hessian
+  smoothing_sigma: 0 # baseline: 0; alternatives: 1, 2, 3
+  normalization: "minmax" # baseline: minmax; alternative: percentile_99
+  risk_weights:
+    w_s: 0.5
+    w_r: 0.3
+    w_c: 0.2
+
+constraints:
+  d_min: 50.0 # metres (minimum seafloor depth proxy)
+  d_max: 400.0 # metres (maximum seafloor depth proxy)
+  s_max: 0.08 # metres/metre (~4.57 deg, near P90)
+  kappa_max: 0.0005 # 1/m (corresponds to minimum radius R_min = 2000 m)
+
+easy_solver:
+  connectivity: 8
+  edge_rule: "endpoint" # baseline; alternative: "midpoint_corner"
+
+hard_solver:
+  num_control_points: 7 # baseline K=7; alternatives: 5, 10
+  num_samples: 200 # M=200
+  alpha: 1.0 # weight on route length (m)
+  beta: 50000.0 # weight on terrain risk (integrates risk R in [0,1] along path)
+  solver_method: "SLSQP"
+  ftol: 1.0e-6
+  maxiter: 300
+  num_starts: 10 # 1 warm, 1 straight, 8 random
+  seed: 42
+
+validation:
+  dense_samples: 2000 # 10x M
+  density_study_samples: [200, 1000, 5000]
